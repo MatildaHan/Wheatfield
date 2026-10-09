@@ -1,4 +1,5 @@
-import { reactive, computed } from 'vue'
+import { reactive, computed, watch } from 'vue'
+import { track } from './useAnalytics'
 
 export type Stage =
   | 'blank'
@@ -50,7 +51,6 @@ export function currentMeta() {
   return STAGE_META[gameState.stage]
 }
 
-/** 完成当前阶段，进入下一个 */
 export function advanceStage() {
   if (gameState.stage === 'blank') {
     gameState.stage = 'grass'
@@ -67,14 +67,24 @@ export function advanceStage() {
   gameState.stage = STAGE_ORDER[idx + 1]
 }
 
-/** 进入指定阶段（用于跳过 / 调试） */
 export function gotoStage(stage: Stage) {
   gameState.stage = stage
 }
 
-/** 重置整个游戏 */
 export function resetGame() {
   gameState.stage = 'blank'
   gameState.completed = []
   gameState.resetToken++
 }
+
+// ---- 阶段埋点 ----
+let stageStartAt = Date.now()
+watch(
+  () => gameState.stage,
+  (next, prev) => {
+    const duration = Date.now() - stageStartAt
+    if (prev) track('stage_exit', { stage: prev, duration })
+    track('stage_enter', { stage: next })
+    stageStartAt = Date.now()
+  },
+)
