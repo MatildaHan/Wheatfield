@@ -1,5 +1,6 @@
 import * as THREE from 'three'
 import { illustrationMaterial } from '../illustrationMaterial'
+import { qualityConfig } from '@/composables/useDeviceTier'
 import type { Stage } from './types'
 
 /** 草地生长：按住拖动，草从指针位置向外扩散 */
@@ -8,13 +9,14 @@ export class GrassStage implements Stage {
   private geometries: THREE.BufferGeometry[] = []
   private materials: THREE.Material[] = []
   private grass?: THREE.InstancedMesh
-  private total = 3200
+  private total: number
   private grown = 0
   private growing = false
   private origin = new THREE.Vector2(0.5, 0.8)
   private target = 0
 
   constructor(scene: THREE.Scene, _world: { ground: THREE.Mesh }) {
+    this.total = qualityConfig().grass
     const geo = new THREE.BufferGeometry()
     geo.setAttribute('position', new THREE.Float32BufferAttribute([
       -5,0,0,-4,0,0,-6,7,1, -0.5,0,0,0.5,0,0,0,10,1, 4,0,0,5,0,0,6,6,1,
@@ -33,7 +35,7 @@ export class GrassStage implements Stage {
   begin(nx: number, ny: number, _cx: number, _cy: number) {
     this.origin.set(nx, ny)
     this.growing = true
-    this.target = Math.min(this.total, this.target + 420)
+    this.target = Math.min(this.total, this.target + Math.round(this.total * 0.15))
   }
   drag(nx: number, ny: number) {
     if (!this.growing) return
@@ -42,18 +44,16 @@ export class GrassStage implements Stage {
   }
   end(): boolean {
     this.growing = false
-    return this.target >= 420
+    return this.target >= Math.round(this.total * 0.15)
   }
 
   update(dt: number, _time: number, _reduced: boolean) {
     if (!this.grass) return
-    const speed = 900
+    const speed = this.total * 0.28
     this.grown = Math.min(this.target, this.grown + dt * speed)
     this.grass.count = Math.floor(this.grown)
-    // 重新布置前 N 个实例
     const dummy = new THREE.Object3D()
-    const seed = 12345
-    let s = seed
+    let s = 12345
     const rand = () => { s = (s * 1664525 + 1013904223) >>> 0; return s / 4294967296 }
     for (let i = 0; i < this.grass.count; i++) {
       const angle = rand() * Math.PI * 2
