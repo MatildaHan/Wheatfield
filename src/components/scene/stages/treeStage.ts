@@ -22,6 +22,7 @@ export class TreeStage implements Stage {
   constructor(scene: THREE.Scene, _world: unknown) {
     this.trunkGeo = new THREE.CylinderGeometry(1, 1.4, 1, 6)
     this.geometries.push(this.trunkGeo)
+
     const shape = new THREE.Shape()
     for (let i = 0; i <= 40; i++) {
       const a = i / 40 * Math.PI * 2
@@ -31,16 +32,19 @@ export class TreeStage implements Stage {
     }
     this.crownGeo = new THREE.ShapeGeometry(shape)
     this.geometries.push(this.crownGeo)
+
     this.trunkMat = illustrationMaterial('#7a5a3a')
     this.crownMat = illustrationMaterial('#7fa06a')
     this.materials.push(this.trunkMat, this.crownMat)
+
     scene.add(this.group)
   }
 
   place(nx: number, ny: number): boolean {
     const x = (nx - 0.5) * 1500
     const z = 200 - ny * 1100
-    if (Math.abs(x) < 100 && z > -200) return false // 避开中心
+    if (Math.abs(x) < 100 && z > -200) return false
+
     const g = new THREE.Group()
     const trunk = new THREE.Mesh(this.trunkGeo, this.trunkMat)
     trunk.scale.set(6, 100, 6)
@@ -50,6 +54,7 @@ export class TreeStage implements Stage {
     g.add(trunk, crown)
     g.position.set(x, 0, z)
     g.scale.setScalar(0.01)
+
     this.group.add(g)
     this.trees.push({ group: g, t: 0, target: 1 })
     return true
