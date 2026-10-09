@@ -40,57 +40,6 @@
         <path d="M1010 110 Q1165 92 1315 126 Q1425 148 1588 140" stroke="#ddd8ce" stroke-width="10" stroke-linecap="round" fill="none" opacity="0.38" />
       </g>
 
-      <!-- Hand-drawn "Density" title -->
-      <g filter="url(#hd-soft)" opacity="0.38" style="mix-blend-mode:multiply">
-        <g transform="translate(460, 210) rotate(-1.2)">
-          <text x="0" y="0" font-family="'Georgia','Times New Roman',serif" font-size="148" font-weight="700" fill="none" stroke="#3a3228" stroke-width="3.2" opacity="0.55">D</text>
-          <text x="1.8" y="-1.4" font-family="'Georgia','Times New Roman',serif" font-size="148" font-weight="700" fill="none" stroke="#3a3228" stroke-width="2.1" opacity="0.42">D</text>
-          <text x="-1.5" y="1.2" font-family="'Georgia','Times New Roman',serif" font-size="148" font-weight="700" fill="none" stroke="#3a3228" stroke-width="1.8" opacity="0.34">D</text>
-          <text x="0.6" y="-0.6" font-family="'Georgia','Times New Roman',serif" font-size="148" font-weight="700" fill="#3a3228" opacity="0.28">D</text>
-        </g>
-        <g transform="translate(568, 218) rotate(0.8)">
-          <text x="0" y="0" font-family="'Georgia','Times New Roman',serif" font-size="118" font-weight="700" fill="none" stroke="#3a3228" stroke-width="2.8" opacity="0.50">e</text>
-          <text x="1.6" y="-1.3" font-family="'Georgia','Times New Roman',serif" font-size="118" font-weight="700" fill="none" stroke="#3a3228" stroke-width="1.9" opacity="0.38">e</text>
-          <text x="-1.3" y="0.9" font-family="'Georgia','Times New Roman',serif" font-size="118" font-weight="700" fill="none" stroke="#3a3228" stroke-width="1.5" opacity="0.30">e</text>
-          <text x="0.4" y="-0.3" font-family="'Georgia','Times New Roman',serif" font-size="118" font-weight="700" fill="#3a3228" opacity="0.26">e</text>
-        </g>
-        <g transform="translate(646, 213) rotate(-1.5)">
-          <text x="0" y="0" font-family="'Georgia','Times New Roman',serif" font-size="132" font-weight="700" fill="none" stroke="#3a3228" stroke-width="3.0" opacity="0.52">n</text>
-          <text x="1.5" y="-1.5" font-family="'Georgia','Times New Roman',serif" font-size="132" font-weight="700" fill="none" stroke="#3a3228" stroke-width="2.0" opacity="0.40">n</text>
-          <text x="-1.2" y="1.0" font-family="'Georgia','Times New Roman',serif" font-size="132" font-weight="700" fill="none" stroke="#3a3228" stroke-width="1.6" opacity="0.32">n</text>
-          <text x="0.5" y="-0.5" font-family="'Georgia','Times New Roman',serif" font-size="132" font-weight="700" fill="#3a3228" opacity="0.27">n</text>
-        </g>
-        <g transform="translate(738, 220) rotate(0.6)">
-          <text x="0" y="0" font-family="'Georgia','Times New Roman',serif" font-size="116" font-weight="700" fill="none" stroke="#3a3228" stroke-width="2.8" opacity="0.50">s</text>
-          <text x="1.4" y="-1.2" font-family="'Georgia','Times New Roman',serif" font-size="116" font-weight="700" fill="none" stroke="#3a3228" stroke-width="1.9" opacity="0.38">s</text>
-          <text x="-1.1" y="1.1" font-family="'Georgia','Times New Roman',serif" font-size="116" font-weight="700" fill="none" stroke="#3a3228" stroke-width="1.5" opacity="0.30">s</text>
-          <text x="0.6" y="-0.4" font-family="'Georgia','Times New Roman',serif" font-size="116" font-weight="700" fill="#3a3228" opacity="0.26">s</text>
-        </g>
-        <g transform="translate(810, 208) rotate(-2.1)">
-          <text x="0" y="0" font-family="'Georgia','Times New Roman',serif" font-size="142" font-weight="700" fill="none" stroke="#3a3228" stroke-width="3.0" opacity="0.52">i</text>
-          <text x="1.8" y="-1.6" font-family="'Georgia','Times New Roman',serif" font-size="142" font-weight="700" fill="none" stroke="#3a3228" stroke-width="2.2" opacity="0.40">i</text>
-          <text x="-1.4" y="1.3" font-family="'Georgia','Times New Roman',serif" font-size="142" font-weight="700" fill="none" stroke="#3a3228" stroke-width="1.7" opacity="0.32">i</text>
-          <text x="0.5" y="-0.6" font-family="'Georgia','Times New Roman',serif" font-size="142" font-weight="700" fill="#3a3228" opacity="0.27">i</text>
-          <circle cx="4" cy="-98" r="5.5" fill="none" stroke="#3a3228" stroke-width="2.4" opacity="0.50" />
-          <circle cx="6.5" cy="-99.5" r="4.5" fill="none" stroke="#3a3228" stroke-width="1.6" opacity="0.36" />
-          <circle cx="5" cy="-97" r="3.8" fill="#3a3228" opacity="0.24" />
-        </g>
-        <g transform="translate(882, 215) rotate(1.1)">
-          <text x="0" y="0" font-family="'Georgia','Times New Roman',serif" font-size="130" font-weight="700" fill="none" stroke="#3a3228" stroke-width="3.0" opacity="0.52">t</text>
-          <text x="1.5" y="-1.4" font-family="'Georgia','Times New Roman',serif" font-size="130" font-weight="700" fill="none" stroke="#3a3228" stroke-width="2.0" opacity="0.40">t</text>
-          <text x="-1.3" y="1.2" font-family="'Georgia','Times New Roman',serif" font-size="130" font-weight="700" fill="none" stroke="#3a3228" stroke-width="1.6" opacity="0.32">t</text>
-          <text x="0.5" y="-0.5" font-family="'Georgia','Times New Roman',serif" font-size="130" font-weight="700" fill="#3a3228" opacity="0.27">t</text>
-        </g>
-        <g transform="translate(966, 222) rotate(-0.7)">
-          <text x="0" y="0" font-family="'Georgia','Times New Roman',serif" font-size="126" font-weight="700" fill="none" stroke="#3a3228" stroke-width="2.8" opacity="0.50">y</text>
-          <text x="1.7" y="-1.5" font-family="'Georgia','Times New Roman',serif" font-size="126" font-weight="700" fill="none" stroke="#3a3228" stroke-width="2.1" opacity="0.38">y</text>
-          <text x="-1.4" y="1.1" font-family="'Georgia','Times New Roman',serif" font-size="126" font-weight="700" fill="none" stroke="#3a3228" stroke-width="1.5" opacity="0.30">y</text>
-          <text x="0.6" y="-0.4" font-family="'Georgia','Times New Roman',serif" font-size="126" font-weight="700" fill="#3a3228" opacity="0.26">y</text>
-        </g>
-        <path d="M458 244 Q518 250 566 240 Q608 230 644 246 Q688 262 738 244 Q774 232 808 250 Q844 268 882 248 Q914 232 962 252 Q1006 274 1040 254" stroke="#3a3228" stroke-width="2.4" fill="none" stroke-linecap="round" opacity="0.36" />
-        <path d="M460 249 Q520 254 568 246 Q610 236 646 251 Q686 266 736 250 Q774 238 808 254 Q842 272 880 253 Q916 238 964 257 Q1008 278 1038 258" stroke="#3a3228" stroke-width="1.3" fill="none" stroke-linecap="round" opacity="0.24" />
-      </g>
-
       <!-- Hand-drawn clouds -->
       <g class="cloud-a" filter="url(#hd-soft)" opacity="0.92">
         <path d="M255 238 Q230 195 265 172 Q300 150 344 164 Q362 132 408 137 Q458 142 470 184 Q522 184 540 222 Q558 260 526 280 Q500 298 453 292 Q420 316 366 304 Q314 304 286 282 Q254 276 248 254 Z" fill="#f7f4ee" />
