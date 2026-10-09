@@ -47,6 +47,44 @@ const wheat = new WheatStage(scene, world)
 
 const stages = { grass, sky, hills, path, trees, houses, river, wheat }
 
+/** 阶段显示顺序（累加） */
+const STAGE_DISPLAY_ORDER = ['grass', 'sky', 'hills', 'path', 'trees', 'houses', 'river', 'wheat'] as const
+
+/** 根据当前阶段，计算每个 stage 是否可见（累加） */
+function applyVisibility(stage: string) {
+  if (stage === 'blank') {
+    Object.values(stages).forEach(s => { s.group.visible = false })
+    return
+  }
+  if (stage === 'free') {
+    Object.values(stages).forEach(s => { s.group.visible = true })
+    return
+  }
+  const idx = STAGE_DISPLAY_ORDER.indexOf(stage as typeof STAGE_DISPLAY_ORDER[number])
+  Object.entries(stages).forEach(([key, s]) => {
+    const kIdx = STAGE_DISPLAY_ORDER.indexOf(key as typeof STAGE_DISPLAY_ORDER[number])
+    s.group.visible = kIdx >= 0 && kIdx <= idx
+  })
+}
+
+// ---- 初始：全隐藏 ----
+Object.values(stages).forEach(s => { s.group.visible = false })
+
+// ---- 阶段切换：累加显示 ----
+watch(
+  () => gameState.stage,
+  (stage) => { applyVisibility(stage) },
+  { immediate: true }
+)
+
+// ---- 重置：全部隐藏 + 清空 ----
+watch(() => gameState.resetToken, () => {
+  Object.values(stages).forEach(s => {
+    s.reset()
+    s.group.visible = false
+  })
+})
+
 let renderer: THREE.WebGLRenderer | undefined
 let raf = 0
 let previous = 0
@@ -176,11 +214,6 @@ function stop() {
   window.removeEventListener('pointercancel', up)
 }
 
-// 重置
-watch(() => gameState.resetToken, () => {
-  Object.values(stages).forEach(s => s.reset())
-})
-
 let contextLostHandler: ((e: Event) => void) | undefined
 let contextRestoredHandler: (() => void) | undefined
 
@@ -217,7 +250,6 @@ onMounted(() => {
       console.info('[webgl] context restored')
       contextLost.value = false
       track('webgl_context_restored')
-      // 重新启动
       previous = 0
       start()
     }
