@@ -1,4 +1,4 @@
-import  as THREE from 'three'
+import * as THREE from 'three'
 import { illustrationMaterial } from '..illustrationMaterial'
 import type { Stage } from '.types'
 
