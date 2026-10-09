@@ -1,15 +1,20 @@
 {
-  "name": "handdrawn-flower-garden",
+  "name": "handdrawn-free-growth",
   "version": "0.1.0",
   "license": "Apache-2.0",
   "private": true,
   "type": "module",
   "scripts": {
     "dev": "vite --host 127.0.0.1",
-    "build": "vue-tsc --noEmit && vite build",
+    "typecheck": "vue-tsc --noEmit",
+    "build": "vite build",
+    "build:strict": "vue-tsc --noEmit && vite build",
     "preview": "vite preview --host 127.0.0.1"
   },
-  "dependencies": { "three": "0.184.0", "vue": "3.5.43" },
+  "dependencies": {
+    "three": "0.184.0",
+    "vue": "3.5.43"
+  },
   "devDependencies": {
     "@types/three": "0.184.1",
     "@vitejs/plugin-vue": "6.0.6",
