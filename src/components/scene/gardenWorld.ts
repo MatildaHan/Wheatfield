@@ -57,4 +57,85 @@ export function createGardenWorld(scene: THREE.Scene) {
     -5,0,0,-4,0,0,-6,7,1, -0.5,0,0,0.5,0,0,0,10,1, 4,0,0,5,0,0,6,6,1,
   ], 3))
   grassGeo.computeVertexNormals()
-  const
+  const grass = new THREE.InstancedMesh(grassGeo, mat('#566d58'), q.grass)
+  const dummy = new THREE.Object3D()
+  for (let i = 0; i < grass.count; i++) {
+    const x = (rand() - 0.5) * 2400, z = (rand() - 0.5) * 2300
+    dummy.position.set(x, terrainHeight(x, z) + 0.2, z)
+    dummy.rotation.set(0, rand() * 6, 0); dummy.scale.setScalar(0.4 + rand() * 0.9)
+    dummy.updateMatrix(); grass.setMatrixAt(i, dummy.matrix)
+  }
+  grass.receiveShadow = q.shadows; group.add(grass)
+
+  // 蕨类（按档位缩放）
+  const fernGeometry = geo(new THREE.BufferGeometry())
+  fernGeometry.setAttribute('position', new THREE.Float32BufferAttribute([
+    0,0,0, -8,16,2, 0,40,7, 0,0,0, 0,40,7, 8,16,2,
+  ], 3))
+  fernGeometry.computeVertexNormals()
+  const fernPlacements: [number, number, number][] = [
+    [-490,470,1],[-750,640,1],[850,510,1],[970,-350,1],[1150,700,1],
+    [-660,-880,0.62],[790,-960,0.58],
+    [-870,-570,0.8],[1160,-790,0.68],
+    [-700,-180,0.85],[760,-80,0.72],
+    [-1090,180,1.05],[1210,210,0.9],
+  ]
+  const fernCount = Math.max(1, Math.round(fernPlacements.length * q.fernScale))
+  const activeFerns = fernPlacements.slice(0, fernCount)
+  const fernLeaves = new THREE.InstancedMesh(fernGeometry, mat('#83a588'), activeFerns.length * 5 * 12 * 2)
+  let leafletIndex = 0
+  const stemMat = mat('#536e52')
+  for (let plant = 0; plant < activeFerns.length; plant++) {
+    const [x, z, plantScale] = activeFerns[plant]!
+    const baseY = terrainHeight(x, z)
+    for (let frond = 0; frond < 5; frond++) {
+      const theta = frond / 5 * Math.PI * 2 + plant
+      const height = (65 + rand() * 105) * plantScale
+      const curve = new THREE.CubicBezierCurve3(
+        new THREE.Vector3(x, baseY, z),
+        new THREE.Vector3(x, baseY + height * 0.65, z),
+        new THREE.Vector3(x + Math.cos(theta) * height * 0.65, baseY + height * 1.3, z + Math.sin(theta) * height * 0.65),
+        new THREE.Vector3(x + Math.cos(theta) * height, baseY + height * 0.75, z + Math.sin(theta) * height),
+      )
+      const stem = new THREE.Mesh(geo(new THREE.TubeGeometry(curve, 12, 0.85, 3, false)), stemMat)
+      stem.castShadow = q.shadows; group.add(stem)
+      for (let node = 0; node < 12; node++) for (const leafSide of [-1, 1]) {
+        const t = 0.12 + node * 0.07, p = curve.getPoint(t)
+        dummy.position.copy(p)
+        dummy.rotation.set(0.3, -theta, leafSide * (0.85 + t * 0.45))
+        const size = (1 - t * 0.8) * height / 110
+        dummy.scale.set(size, size, size); dummy.updateMatrix()
+        fernLeaves.setMatrixAt(leafletIndex++, dummy.matrix)
+      }
+    }
+  }
+  fernLeaves.castShadow = fernLeaves.receiveShadow = q.shadows
+  group.add(fernLeaves)
+
+  const hemi = new THREE.HemisphereLight('#fff9e9', '#b7cbb6', 2.1)
+  const sun = new THREE.DirectionalLight('#fff6e4', 1.15)
+  sun.position.set(-650, 1100, 500); sun.target.position.set(0, 0, -100)
+  sun.castShadow = q.shadows
+  sun.shadow.mapSize.set(q.shadowMap, q.shadowMap)
+  Object.assign(sun.shadow.camera, {
+    left: -1150, right: 1150, top: 1150, bottom: -1150, near: 10, far: 3000,
+  })
+  sun.shadow.normalBias = 1.5; sun.shadow.bias = -0.00015
+  scene.add(hemi, sun, sun.target)
+
+  scene.background = null
+  scene.fog = new THREE.Fog('#e9e6d5', 1600, 3800)
+
+  return {
+    ground,
+    plantingObstacles: botanicals.obstacles,
+    dispose() {
+      botanicals.dispose()
+      distance.dispose()
+      geometries.forEach(g => g.dispose())
+      materials.forEach(m => m.dispose())
+      sun.shadow.map?.dispose()
+      scene.remove(group, hemi, sun, sun.target)
+    },
+  }
+}
